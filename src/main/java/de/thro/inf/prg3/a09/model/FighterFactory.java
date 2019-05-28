@@ -10,6 +10,7 @@ import de.thro.inf.prg3.a09.resource.ResourceLoader;
 import de.thro.inf.prg3.a09.util.NameGenerator;
 import javafx.scene.image.Image;
 
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -24,11 +25,21 @@ public final class FighterFactory {
 	private final Random random;
 	private final NameGenerator nameGenerator;
 	private final ResourceLoader<Image> imageResourceLoader;
+	private final HashMap<String, Image> flyweightCache;
 
 	public FighterFactory() {
 		nameGenerator = new NameGenerator();
 		random = new Random();
 		imageResourceLoader = new ResourceLoader<>(Image::new);
+		flyweightCache = new HashMap<>();
+	}
+
+	private Image loadIfNotInCache(String path){
+		if(!flyweightCache.containsKey(path)){
+			var img = imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(),path);
+			flyweightCache.put(path, img);
+		}
+		return flyweightCache.get(path);
 	}
 
 	/**
@@ -40,17 +51,17 @@ public final class FighterFactory {
 	public Fighter createFighter() {
 		switch (random.nextInt(NumberOfKnownFighterTypes)) {
 			case 0:
-				return new AWing(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/awing.jpg"));
+				return new AWing(nameGenerator.generateName(), loadIfNotInCache("fighter/awing.jpg"));
 			case 1:
-				return new XWing(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/xwing.jpg"));
+				return new XWing(nameGenerator.generateName(), loadIfNotInCache("fighter/xwing.jpg"));
 			case 2:
-				return new YWing(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/ywing.jpg"));
+				return new YWing(nameGenerator.generateName(), loadIfNotInCache("fighter/ywing.jpg"));
 			case 3:
-				return new TieBomber(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/tiebomber.jpg"));
+				return new TieBomber(nameGenerator.generateName(), loadIfNotInCache( "fighter/tiebomber.jpg"));
 			case 4:
-				return new TieFighter(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/tiefighter.jpg"));
+				return new TieFighter(nameGenerator.generateName(), loadIfNotInCache("fighter/tiefighter.jpg"));
 			default:
-				return new TieInterceptor(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/tieinterceptor.jpg"));
+				return new TieInterceptor(nameGenerator.generateName(), loadIfNotInCache("fighter/tieinterceptor.jpg"));
 		}
 	}
 }
