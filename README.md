@@ -60,8 +60,8 @@ If everything works out the memory usage should stagnate instead of constantly g
 As you already know adapters are used e.g to create a compatibility layer between to incompatible interfaces or to create a more convenient API if the API of e.g. a library is too complicated.
 
 You might have noticed that the API to load an image in the `FighterFactory` is a little bit more complicated and verbose than probably required.
-As a good software engineer you should implement a `FxImageLoaderAdapter` that encapsulates the generic `ResourceLoader<T>` and that has a more convenient API shown in the following UML.
+As a good software engineer you should implement a `de.thro.inf.prg3.a09.model.FxImageLoaderAdapter` that encapsulates the generic `ResourceLoader<T>` and that has a more convenient API shown in the following UML.
 
-![FxImageLoaderAdapter spec](assets/images/adapter-spec.svg)
+![de.thro.inf.prg3.a09.model.FxImageLoaderAdapter spec](assets/images/adapter-spec.svg)
 
-_Hint: the arrow between the two classes only illustrates a composition of the `FxImageLoaderAdapter` and the `ResourceLoader<T>`._
+_Hint: the arrow between the two classes only illustrates a composition of the `de.thro.inf.prg3.a09.model.FxImageLoaderAdapter` and the `ResourceLoader<T>`._

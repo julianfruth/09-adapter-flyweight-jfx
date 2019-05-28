@@ -4,7 +4,7 @@ left to right direction
 
 package de.thro.inf.prg3.a09.resource {
 
-	class FxImageLoaderAdapter {
+	class de.thro.inf.prg3.a09.model.FxImageLoaderAdapter {
 		- resourceLoader: ResourceLoader<Image>
 		+ loadImage(resourcePath: String)
 		+ loadImage(resourceContext: ClassLoader, resourcePath: String)
@@ -14,6 +14,6 @@ package de.thro.inf.prg3.a09.resource {
 		+ loadResource(resourceContext: ClassLoader, path: String): T
 	}
 
-	FxImageLoaderAdapter *-- ResourceLoader
+	de.thro.inf.prg3.a09.model.FxImageLoaderAdapter *-- ResourceLoader
 }
 @enduml

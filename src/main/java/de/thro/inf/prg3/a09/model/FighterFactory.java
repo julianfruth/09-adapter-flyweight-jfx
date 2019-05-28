@@ -1,5 +1,6 @@
 package de.thro.inf.prg3.a09.model;
 
+import com.sun.javafx.fxml.builder.JavaFXImageBuilder;
 import de.thro.inf.prg3.a09.model.empire.TieBomber;
 import de.thro.inf.prg3.a09.model.empire.TieFighter;
 import de.thro.inf.prg3.a09.model.empire.TieInterceptor;
@@ -24,19 +25,19 @@ public final class FighterFactory {
 	private static final int NumberOfKnownFighterTypes = 6;
 	private final Random random;
 	private final NameGenerator nameGenerator;
-	private final ResourceLoader<Image> imageResourceLoader;
+	private final FxImageLoaderAdapter imageResourceLoader;
 	private final HashMap<String, Image> flyweightCache;
 
 	public FighterFactory() {
 		nameGenerator = new NameGenerator();
 		random = new Random();
-		imageResourceLoader = new ResourceLoader<>(Image::new);
+		imageResourceLoader = new FxImageLoaderAdapter();
 		flyweightCache = new HashMap<>();
 	}
 
 	private Image loadIfNotInCache(String path){
 		if(!flyweightCache.containsKey(path)){
-			var img = imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(),path);
+			var img = imageResourceLoader.loadImage(path);
 			flyweightCache.put(path, img);
 		}
 		return flyweightCache.get(path);
